@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ProducerConsumer" default="run" basedir=".">
+
+    <property name="src.dir" value="src/main/java"/>
+    <property name="res.dir" value="src/main/resources"/>
+    <property name="build.dir" value="bin"/>
+
+    <!-- Nettoyage -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- Compilation -->
+    <target name="compile">
+        <mkdir dir="${build.dir}"/>
+        <!-- compiler les .java -->
+        <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false"/>
+        <!-- copier les ressources (XML, etc.) -->
+        <copy todir="${build.dir}">
+            <fileset dir="${res.dir}" includes="**/*.*"/>
+        </copy>
+    </target>
+
+    <!-- Exécution -->
+    <target name="run" depends="compile">
+        <java classname="main.java.prodcons.app.TestProdCons" fork="true" dir="${basedir}">
+            <classpath>
+                <pathelement path="${build.dir}"/>
+            </classpath>
+        </java>
+    </target>
+
+</project>
+
