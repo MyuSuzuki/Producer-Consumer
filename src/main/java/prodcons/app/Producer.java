@@ -2,7 +2,7 @@ package main.java.prodcons.app;
 import main.java.prodcons.core.IProdConsBuffer;
 import main.java.prodcons.core.Message;
 
-public class Producer extends Thread {
+public class Producer implements Runnable {
 
     IProdConsBuffer buffer;
     int prodTime;
@@ -14,7 +14,6 @@ public class Producer extends Thread {
          this.buffer=buffer;
          this.prodTime=prodTime;
          this.nMessages=nMessages;
-         this.start();
     }
 
     @Override
@@ -23,7 +22,7 @@ public class Producer extends Thread {
             for (int i=0; i< nMessages; i++){ 
                 System.out.println("Producer " + Thread.currentThread().threadId() + " veut produire "); 
                 produce();
-                sleep(prodTime);
+                Thread.sleep(prodTime);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
