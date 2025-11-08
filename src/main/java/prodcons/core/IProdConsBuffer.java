@@ -21,4 +21,6 @@ public int nmsg();
 * been put in the buffer since its creation
 **/
 public int totmsg();
+
+public void setProductionTerminee();
 }

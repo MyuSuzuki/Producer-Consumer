@@ -1,6 +1,7 @@
 package main.java.prodcons.app;
 
 import main.java.prodcons.v1.ProdConsBufferDirect;
+import main.java.prodcons.v2.ProdConsBufferDirectTerm;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -25,7 +26,7 @@ public class TestProdCons {
         int minProd = Integer.parseInt(properties.getProperty("minProd"));
         int maxProd = Integer.parseInt(properties.getProperty("maxProd"));
 
-        IProdConsBuffer buffer = new ProdConsBufferDirect(bufSz);
+        IProdConsBuffer buffer = new ProdConsBufferDirectTerm(bufSz);
 
         int totalMessages = 0; // pour compter tous les messages produits
 
@@ -60,6 +61,7 @@ public class TestProdCons {
         for (Thread t : producerThreads) {
             t.join();
         }
+        buffer.setProductionTerminee();
 
         // On attend que tous les consumers aient fini
         for (Thread t : consumerThreads) {

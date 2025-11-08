@@ -67,4 +67,7 @@ public class ProdConsBufferDirect implements IProdConsBuffer {
     public synchronized int totmsg() {
         return totmsg;
     }
+
+    @Override
+    public void setProductionTerminee() {}
 }
