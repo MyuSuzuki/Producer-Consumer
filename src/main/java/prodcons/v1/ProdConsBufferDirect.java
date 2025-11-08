@@ -21,18 +21,18 @@ public class ProdConsBufferDirect implements IProdConsBuffer {
     public synchronized void put(Message m) throws InterruptedException {
         // attendre qu'il y ait une place libre
         while (n == bufSz) {
+            System.out.println("[BUFFER DIRECT PLEIN]");
             wait();
         }
 
         // insérer le message à la position 'in'
         buffer[in] = m;
-        in = (in + 1) % bufSz;
+        in = (in + 1) % bufSz; 
         n++;
         totmsg++;
 
-        System.out.println("[BUFFER] Message produit : " + m + " | n=" + n);
+        System.out.println("Nombre de place prises =" + n);
 
-        // réveiller les consommateurs éventuels
         notifyAll();
     }
 
@@ -40,6 +40,7 @@ public class ProdConsBufferDirect implements IProdConsBuffer {
     public synchronized Message get() throws InterruptedException {
         // attendre qu'il y ait un message
         while (n == 0) {
+            System.out.println("[BUFFER DIRECT VIDE]");
             wait();
         }
 
@@ -49,7 +50,7 @@ public class ProdConsBufferDirect implements IProdConsBuffer {
         out = (out + 1) % bufSz;
         n--;
 
-        System.out.println("[BUFFER] Message consommé : " + m + " | n=" + n);
+        System.out.println("Nombre de places prises =" + n);
 
         // réveiller les producteurs éventuels
         notifyAll();

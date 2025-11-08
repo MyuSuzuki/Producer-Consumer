@@ -6,6 +6,7 @@ public class Consumer extends Thread {
 
     private final IProdConsBuffer buffer;
     private final int consTime;
+    
 
     public Consumer(IProdConsBuffer buffer, int consTime) {
         this.buffer = buffer;
@@ -17,6 +18,7 @@ public class Consumer extends Thread {
     public void run() {
         try {
             while (true) {
+                System.out.println("Consumer " + Thread.currentThread().threadId() + " veut consommer");
                 Message m = buffer.get();
                 consume(m);
                 sleep(consTime);
@@ -27,6 +29,6 @@ public class Consumer extends Thread {
     }
 
     private void consume(Message m) {
-        System.out.println("Consumer " + Thread.currentThread().threadId() + " consomme " + m);
+        System.out.println("Message " + m + " consommé par Consumer " + Thread.currentThread().threadId());
     }
 }

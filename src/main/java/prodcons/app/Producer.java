@@ -8,19 +8,20 @@ public class Producer extends Thread {
     int prodTime;
     int minProd;
     int maxProd;
+    int nMessages;
 
-    public Producer (IProdConsBuffer buffer, int prodTime, int minProd, int maxProd){
+    public Producer (IProdConsBuffer buffer, int prodTime, int nMessages){
          this.buffer=buffer;
          this.prodTime=prodTime;
-         this.minProd=minProd;
-         this.maxProd=maxProd;
+         this.nMessages=nMessages;
          this.start();
     }
 
     @Override
     public void run() {
         try {
-            for (int i=0; i< (int)(Math.random()*(maxProd-minProd)+minProd); i++){ // produce a random number of messages between minProd and maxProd
+            for (int i=0; i< nMessages; i++){ 
+                System.out.println("Producer " + Thread.currentThread().threadId() + " veut produire "); 
                 produce();
                 sleep(prodTime);
             }
@@ -30,6 +31,6 @@ public class Producer extends Thread {
     }
 
     public void produce() throws InterruptedException{
-        buffer.put(new Message("New message", this)); // produce a message with a random value between 0 and 99
+        buffer.put(new Message("Message du producteur " + Thread.currentThread().threadId() , this)); // produce a message with a random value between 0 and 99
     }
 }

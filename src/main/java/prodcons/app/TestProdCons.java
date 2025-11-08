@@ -24,12 +24,17 @@ public class TestProdCons {
 
         IProdConsBuffer buffer = new ProdConsBufferDirect(bufSz);
 
-        // Lancer producteurs et consommateurs dans un ordre mélangé
+        // Lancement des producteurs et consommateurs dans un ordre mélangé
         for (int i = 0; i < Math.max(nProd, nCons); i++) {
-            if (i < nProd && Math.random() < 0.5)
-                new Producer(buffer, prodTime, minProd, maxProd);
-            if (i < nCons)
+            if (i < nProd && Math.random() < 0.5){
+                int n = (int)(Math.random()*(maxProd-minProd)+minProd);// produce a random number of messages entre minProd and maxProd
+                new Producer(buffer, prodTime, n);
+            }
+            if (i < nCons){
                 new Consumer(buffer, consTime);
+            }
         }
+
+
     }
 }
