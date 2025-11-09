@@ -23,7 +23,7 @@
 
     <!-- Exécution -->
     <target name="run" depends="compile">
-        <java classname="main.java.prodcons.app.TestProdCons" fork="true" dir="${basedir}">
+        <java classname="main.java.prodcons.v3.TestProdCons" fork="true" dir="${basedir}">
             <classpath>
                 <pathelement path="${build.dir}"/>
             </classpath>
