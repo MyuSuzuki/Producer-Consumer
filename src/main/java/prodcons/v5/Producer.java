@@ -20,6 +20,7 @@ public class Producer implements Runnable {
             for (int i=0; i< nMessages; i++){ 
                 System.out.println("Producer " + Thread.currentThread().threadId() + " veut produire "); 
                 produce();
+                System.out.println("Producer " + Thread.currentThread().threadId() + " a produit "); 
                 Thread.sleep(prodTime);
             }
         } catch (InterruptedException e) {

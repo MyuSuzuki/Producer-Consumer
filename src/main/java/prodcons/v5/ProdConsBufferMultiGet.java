@@ -20,7 +20,7 @@ public class ProdConsBufferMultiGet implements IProdConsBuffer {
     public synchronized void put(Message m) throws InterruptedException {
         // attendre qu'il y ait une place libre
         while (n == bufSz) {
-            System.out.println("[BUFFER DIRECT PLEIN]");
+            System.out.println("[BUFFER PLEIN]");
             wait();
         }
 

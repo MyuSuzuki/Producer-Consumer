@@ -22,7 +22,7 @@ public class Consumer implements Runnable {
                 break; // plus de messages possibles
                 }
             for (Message message : messages) {              
-                consume(message);   
+                consume(message,k);   
                 Thread.sleep(consTime);
                 }
          } 
@@ -30,7 +30,7 @@ public class Consumer implements Runnable {
             e.printStackTrace();
             }
 }
-    private void consume(Message m) { 
-        System.out.println("Message " + m + " consommé par Consumer " + Thread.currentThread().threadId());
+    private void consume(Message m, int k) { 
+        System.out.println(k  + " messages ont été consommés par Consumer " + Thread.currentThread().threadId());
     }
 }
