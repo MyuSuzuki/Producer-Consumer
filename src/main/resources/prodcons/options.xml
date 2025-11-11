@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-  <entry key="nProd">4</entry>
-  <entry key="nCons">3</entry>
+  <entry key="nProd">50</entry>
+  <entry key="nCons">50</entry>
   <entry key="bufSz">8</entry>
   <entry key="prodTime">10</entry>
   <entry key="consTime">10</entry>

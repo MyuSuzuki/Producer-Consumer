@@ -8,7 +8,6 @@ public class ProdConsBufferSemaphore implements IProdConsBuffer {
 
     private final Message[] buffer;
     private final int bufSz;
-    private final int nCons;
     private int in = 0;      // index d'insertion
     private int out = 0;     // index de retrait
     private int n = 0;       // nombre courant de messages
@@ -19,6 +18,7 @@ public class ProdConsBufferSemaphore implements IProdConsBuffer {
     private final Semaphore empty; // nombre de cases libres
     private final Semaphore full;  // nombre de messages prêts
     private final Semaphore mutex; // exclusion mutuelle
+    private final int nCons; // nombre de consommateurs
 
     public ProdConsBufferSemaphore(int bufSz, int nCons) {
         this.bufSz = bufSz;
@@ -45,11 +45,14 @@ public class ProdConsBufferSemaphore implements IProdConsBuffer {
 
     @Override
     public Message get() throws InterruptedException {
-        if (productionTerminee && n == 0) {
-            return null; // plus rien à consommer, on arrête
-        }
         full.acquire();    // attendre un message disponible
         mutex.acquire();   // entrer en section critique
+
+        if (n == 0 && productionTerminee) {
+            mutex.release();   // sortir de la section critique
+            full.release();    // remettre le sémaphore pour les autres consommateurs
+            return null;       // plus de messages possibles
+        }
 
         Message m = buffer[out];
         out = (out + 1) % bufSz;
