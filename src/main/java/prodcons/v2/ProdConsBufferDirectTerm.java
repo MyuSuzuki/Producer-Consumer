@@ -1,8 +1,4 @@
 package main.java.prodcons.v2;
-
-import main.java.prodcons.core.IProdConsBuffer;
-import main.java.prodcons.core.Message;
-
 public class ProdConsBufferDirectTerm implements IProdConsBuffer {
 
     private final Message[] buffer;  // tampon fixe

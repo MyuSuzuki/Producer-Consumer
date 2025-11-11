@@ -1,4 +1,4 @@
-package main.java.prodcons.core;
+package main.java.prodcons.v3;
 
 public interface IProdConsBuffer {
 /**

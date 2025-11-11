@@ -8,9 +8,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import main.java.prodcons.app.Consumer;
-import main.java.prodcons.app.Producer;
-import main.java.prodcons.core.IProdConsBuffer;
 
 public class TestProdCons {
     public static void main(String[] args) throws Exception {

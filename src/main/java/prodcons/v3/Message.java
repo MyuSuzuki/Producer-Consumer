@@ -1,5 +1,4 @@
-package main.java.prodcons.core;
-import main.java.prodcons.app.Producer;
+package main.java.prodcons.v3;
 
 public class Message {
     private final String content;

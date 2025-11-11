@@ -1,6 +1,4 @@
-package main.java.prodcons.app;
-import main.java.prodcons.core.IProdConsBuffer;
-import main.java.prodcons.core.Message;
+package main.java.prodcons.v2;
 
 public class Producer implements Runnable {
 

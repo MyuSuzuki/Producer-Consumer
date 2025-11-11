@@ -1,6 +1,4 @@
-package main.java.prodcons.app;
-import main.java.prodcons.core.IProdConsBuffer;
-import main.java.prodcons.core.Message;
+package main.java.prodcons.v5;
 
 public class Consumer implements Runnable {
 
@@ -17,19 +15,21 @@ public class Consumer implements Runnable {
         try {
             while (true) { 
                 System.out.println("Consumer " + Thread.currentThread().threadId() + " veut consommer");
-                Message m = buffer.get();
-                if (m == null) {
+                int k = (int)(Math.random()*5) + 1 ; // nombre aléatoire entre 1 et 5
+                Message[] messages = buffer.get(k);
+                if (messages == null) {
                 System.out.println("Consumer " + Thread.currentThread().threadId() + " termine");
                 break; // plus de messages possibles
-            }
-                consume(m);
+                }
+            for (Message message : messages) {              
+                consume(message);   
                 Thread.sleep(consTime);
-            }
+                }
+         } 
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-    }
-
+            }
+}
     private void consume(Message m) { 
         System.out.println("Message " + m + " consommé par Consumer " + Thread.currentThread().threadId());
     }

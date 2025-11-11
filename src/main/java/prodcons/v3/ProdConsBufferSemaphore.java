@@ -1,7 +1,5 @@
 package main.java.prodcons.v3;
 
-import main.java.prodcons.core.IProdConsBuffer;
-import main.java.prodcons.core.Message;
 import java.util.concurrent.Semaphore;
 
 public class ProdConsBufferSemaphore implements IProdConsBuffer {

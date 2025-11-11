@@ -1,7 +1,5 @@
 package main.java.prodcons.v1;
 
-import main.java.prodcons.core.IProdConsBuffer;
-import main.java.prodcons.core.Message;
 
 public class ProdConsBufferDirect implements IProdConsBuffer {
 

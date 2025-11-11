@@ -1,10 +1,13 @@
-package main.java.prodcons.v1;
+package main.java.prodcons.v5;
+
 
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+
 
 public class TestProdCons {
     public static void main(String[] args) throws Exception {
@@ -21,12 +24,13 @@ public class TestProdCons {
         int minProd = Integer.parseInt(properties.getProperty("minProd"));
         int maxProd = Integer.parseInt(properties.getProperty("maxProd"));
 
-        IProdConsBuffer buffer = new ProdConsBufferDirect(bufSz);
+        IProdConsBuffer buffer = new ProdConsBufferMultiGet(bufSz);
 
         int totalMessages = 0; // pour compter tous les messages produits
 
         List<Thread> producerThreads = new ArrayList<>();
         List<Thread> consumerThreads = new ArrayList<>();
+        List<Thread> tasks = new ArrayList<>();
 
         // Lancement des producteurs et consommateurs
         for (int i = 0; i < Math.max(nProd, nCons); i++) {
@@ -36,26 +40,35 @@ public class TestProdCons {
 
                 Producer producer = new Producer(buffer, prodTime, n);
                 Thread t = new Thread(producer);
-                t.start();
+                tasks.add(t);
                 producerThreads.add(t);
             }
 
             if (i < nCons-1) { //je m'assure que le dernier thread créé soit un Consumer pour avoir la bonne valeur de totalMessages
                 Consumer consumer = new Consumer(buffer, consTime, totalMessages);
                 Thread t = new Thread(consumer);
-                t.start();
+                tasks.add(t);
                 consumerThreads.add(t);
             }
         }
 
         Thread lastConsumer = new Thread(new Consumer(buffer, consTime, totalMessages));
-        lastConsumer.start();
+        tasks.add(lastConsumer);
         consumerThreads.add(lastConsumer);
+
+        // Mélange aléatoirement la liste
+        Collections.shuffle(tasks);
+
+        // Lance les threads dans cet ordre aléatoire
+        for (Thread t : tasks) {
+            t.start();
+        }
 
         // On attend que tous les producteurs aient fini
         for (Thread t : producerThreads) {
             t.join();
         }
+        
         buffer.setProductionTerminee();
 
         // On attend que tous les consumers aient fini
